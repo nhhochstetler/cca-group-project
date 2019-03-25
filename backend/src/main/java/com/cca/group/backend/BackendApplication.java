@@ -1,5 +1,8 @@
 package com.cca.group.backend;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
@@ -41,6 +44,10 @@ public class BackendApplication {
 		HTableDescriptor taxiDescriptor = new HTableDescriptor(TableName.valueOf("taxi"));
 		taxiDescriptor.addFamily(new HColumnDescriptor("green"));
 		admin.createTable(taxiDescriptor);
+	}
+	
+	private void loadData() throws FileNotFoundException {
+		BufferedReader br = new BufferedReader(new FileReader("../data/green_tripdata_2018-01.csv"));
 	}
 
 }
