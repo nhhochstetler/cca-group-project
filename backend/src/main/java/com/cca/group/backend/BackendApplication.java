@@ -41,6 +41,7 @@ public class BackendApplication {
 		HBaseAdmin admin = new HBaseAdmin(conf);
 		
 		createTable(admin);
+		loadData();
 		
 		return admin;
 	}
@@ -48,7 +49,15 @@ public class BackendApplication {
 	private void createTable(HBaseAdmin admin) throws IOException {
 		logger.debug("Creating the taxi table");
 		
-		HTableDescriptor taxiDescriptor = new HTableDescriptor(TableName.valueOf("green_taxi"));
+		HTableDescriptor taxiDescriptor = admin.getTableDescriptor(TableName.valueOf("green_taxi"));
+		
+		if (taxiDescriptor == null) {
+			logger.debug("Table {} already exists. No need to create table", taxiDescriptor.getNameAsString());
+			
+			return;
+		}
+		
+		taxiDescriptor = new HTableDescriptor(TableName.valueOf("green_taxi"));
 		
 		taxiDescriptor.addFamily(new HColumnDescriptor("vendorID"));
 		taxiDescriptor.addFamily(new HColumnDescriptor("pickupTime"));
