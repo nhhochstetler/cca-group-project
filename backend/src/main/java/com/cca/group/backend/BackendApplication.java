@@ -12,6 +12,7 @@ import org.apache.hadoop.hbase.MasterNotRunningException;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
+import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
@@ -40,8 +41,12 @@ public class BackendApplication {
 		Configuration conf = HBaseConfiguration.create();
 		HBaseAdmin admin = new HBaseAdmin(conf);
 		
-		createTable(admin);
-		loadData();
+		if (!admin.tableExists(TableName.valueOf("green_taxi"))) {
+			createTable(admin);
+			loadData(conf);
+		} else {
+			logger.debug("Taxi table already exists. No need to create it");
+		}
 		
 		return admin;
 	}
@@ -49,38 +54,21 @@ public class BackendApplication {
 	private void createTable(HBaseAdmin admin) throws IOException {
 		logger.debug("Creating the taxi table");
 		
-		if (admin.tableExists(TableName.valueOf("green_taxi"))) {
-			logger.debug("Taxi table already exists. No need to create it");
-			return;
-		}
-		
 		HTableDescriptor taxiDescriptor = new HTableDescriptor(TableName.valueOf("green_taxi"));
 		
-		taxiDescriptor.addFamily(new HColumnDescriptor("vendorID"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("pickupTime"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("dropoffTime"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("storeFwdFlag"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("ratecodeID"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("pickupLocationID"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("dropoffLocationID"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("passengerCount"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("tripDistance"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("fareAmount"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("extra"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("mtaTax"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("tipAmount"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("tollsAmount"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("ehailFee"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("improvementSurcharge"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("totalAmount"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("paymentType"));
-		taxiDescriptor.addFamily(new HColumnDescriptor("tripType"));
+		taxiDescriptor.addFamily(new HColumnDescriptor("pickup"));
+		taxiDescriptor.addFamily(new HColumnDescriptor("dropoff"));
+		taxiDescriptor.addFamily(new HColumnDescriptor("trip_data"));
+		taxiDescriptor.addFamily(new HColumnDescriptor("cost_fees"));
 		
 		admin.createTable(taxiDescriptor);
 	}
 	
-	private void loadData() throws IOException {
+	@SuppressWarnings("deprecation")
+	private void loadData(Configuration conf) throws IOException {
 		logger.debug("Populating the taxi tables with data");
+		
+		HTable table = new HTable(conf, "green_taxi");
 		
 		//For now, just getting one months data
 		BufferedReader br = new BufferedReader(new FileReader("../data/green_tripdata_2018-01.csv"));
@@ -91,8 +79,22 @@ public class BackendApplication {
 			
 			Put p = new Put(Bytes.toBytes("row" + count));
 			
-			System.out.println(input);
+			p.add(Bytes.toBytes("pickup"),
+					Bytes.toBytes("pickupTime"),
+					Bytes.toBytes(vals[1]));
 			
+			p.add(Bytes.toBytes("pickup"),
+					Bytes.toBytes("pickupLocationID"),
+					Bytes.toBytes(vals[5]));
+			
+			p.add(Bytes.toBytes("dropoff"),
+					Bytes.toBytes("dropoffTime"),
+					Bytes.toBytes(vals[2]));
+			
+			p.add(Bytes.toBytes("pickup"),
+					Bytes.toBytes("dropoffLocationID"),
+					Bytes.toBytes(vals[6]));
+			table.put(p);
 			count++;
 		}
 	}
