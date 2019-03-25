@@ -51,6 +51,7 @@ public class BackendApplication {
 		
 		if (admin.tableExists(TableName.valueOf("green_taxi"))) {
 			logger.debug("Taxi table already exists. No need to create it");
+			return;
 		}
 		
 		HTableDescriptor taxiDescriptor = new HTableDescriptor(TableName.valueOf("green_taxi"));
