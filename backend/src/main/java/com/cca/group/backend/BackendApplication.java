@@ -78,8 +78,8 @@ public class BackendApplication {
 		
 		int count = 0;
 		while ((input = br.readLine()) != null) {
-			System.out.println(input);
 			String[] vals = input.split(",");
+			System.out.println(vals);
 			
 //			Put p = new Put(Bytes.toBytes("row" + count));
 //			
