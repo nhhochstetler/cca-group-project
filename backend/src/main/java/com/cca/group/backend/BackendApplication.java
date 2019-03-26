@@ -43,10 +43,10 @@ public class BackendApplication {
 		
 		if (!admin.tableExists(TableName.valueOf("green_taxi"))) {
 			createTable(admin);
-			loadData(conf);
 		} else {
 			logger.debug("Taxi table already exists. No need to create it");
 		}
+		loadData(conf);
 		
 		return admin;
 	}
