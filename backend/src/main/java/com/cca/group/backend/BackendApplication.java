@@ -73,9 +73,14 @@ public class BackendApplication {
 		//For now, just getting one months data
 		BufferedReader br = new BufferedReader(new FileReader("../data/green_tripdata_2018-01.csv"));
 		String input;
+		
+		br.readLine();
+		
 		int count = 0;
 		while ((input = br.readLine()) != null) {
+			logger.debug(input);
 			String[] vals = input.split(",");
+			logger.debug("Input {}",(Object[]) vals); 
 			
 			Put p = new Put(Bytes.toBytes("row" + count));
 			
