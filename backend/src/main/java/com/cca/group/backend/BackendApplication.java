@@ -80,11 +80,9 @@ public class BackendApplication {
 		while ((input = br.readLine()) != null) {
 			String[] vals = input.split(",");
 			for (int i = 0; i < vals.length; i++) {
-				System.out.print(vals[i].trim());
+				System.out.print(i + ": " + vals[i].trim());
 				System.out.println("");
 			}
-			
-			System.out.println(vals[1].trim());
 			
 //			Put p = new Put(Bytes.toBytes("row" + count));
 //			
