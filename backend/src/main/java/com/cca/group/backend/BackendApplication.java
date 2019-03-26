@@ -81,12 +81,7 @@ public class BackendApplication {
 		while ((str = br.readLine()) != null) {
 			String[] vals = str.split(",");
 			
-			for (int i = 0; i < vals.length; i++) {
-				System.out.print(i + ": " + vals[i].trim());
-				System.out.println("");
-			}
-			
-			if (vals.length > 10) {
+			if (vals.length > 18) {
 				Put p = new Put(Bytes.toBytes("row" + count));
 				
 				p.add(Bytes.toBytes("pickup"),
