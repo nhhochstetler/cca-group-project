@@ -86,12 +86,12 @@ public class BackendApplication {
 				System.out.println("");
 			}
 			
-			if (vals.length > 0) {
+			if (vals.length > 10) {
 				Put p = new Put(Bytes.toBytes("row" + count));
 				
 				p.add(Bytes.toBytes("pickup"),
 						Bytes.toBytes("pickupTime"),
-						Bytes.toBytes(vals[0]));
+						Bytes.toBytes(vals[1]));
 				
 				p.add(Bytes.toBytes("pickup"),
 						Bytes.toBytes("pickupLocationID"),
