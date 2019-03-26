@@ -91,7 +91,7 @@ public class BackendApplication {
 				
 				p.add(Bytes.toBytes("pickup"),
 						Bytes.toBytes("pickupTime"),
-						Bytes.toBytes(vals[1]));
+						Bytes.toBytes(vals[0]));
 				
 				p.add(Bytes.toBytes("pickup"),
 						Bytes.toBytes("pickupLocationID"),
