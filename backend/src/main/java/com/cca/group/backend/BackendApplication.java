@@ -66,12 +66,12 @@ public class BackendApplication {
 	
 	@SuppressWarnings("deprecation")
 	private void loadData(Configuration conf) throws IOException {
-		logger.debug("Populating the taxi tables with data {}", System.getProperty("user.dir"));
+		logger.debug("Populating the taxi tables with data");
 		
 		HTable table = new HTable(conf, "green_taxi");
 		
 		//For now, just getting one months data
-		BufferedReader br = new BufferedReader(new FileReader("../data/green_tripdata_2018-01.csv"));
+		BufferedReader br = new BufferedReader(new FileReader("/cca-group-project/data/green_tripdata_2018-01.csv"));
 		String input;
 		
 		br.readLine();
