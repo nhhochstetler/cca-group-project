@@ -78,28 +78,27 @@ public class BackendApplication {
 		
 		int count = 0;
 		while ((input = br.readLine()) != null) {
-			logger.debug(input);
+			System.out.println(input);
 			String[] vals = input.split(",");
-			logger.debug("Input {}",(Object[]) vals); 
 			
-			Put p = new Put(Bytes.toBytes("row" + count));
-			
-			p.add(Bytes.toBytes("pickup"),
-					Bytes.toBytes("pickupTime"),
-					Bytes.toBytes(vals[1]));
-			
-			p.add(Bytes.toBytes("pickup"),
-					Bytes.toBytes("pickupLocationID"),
-					Bytes.toBytes(vals[5]));
-			
-			p.add(Bytes.toBytes("dropoff"),
-					Bytes.toBytes("dropoffTime"),
-					Bytes.toBytes(vals[2]));
-			
-			p.add(Bytes.toBytes("pickup"),
-					Bytes.toBytes("dropoffLocationID"),
-					Bytes.toBytes(vals[6]));
-			table.put(p);
+//			Put p = new Put(Bytes.toBytes("row" + count));
+//			
+//			p.add(Bytes.toBytes("pickup"),
+//					Bytes.toBytes("pickupTime"),
+//					Bytes.toBytes(vals[1]));
+//			
+//			p.add(Bytes.toBytes("pickup"),
+//					Bytes.toBytes("pickupLocationID"),
+//					Bytes.toBytes(vals[5]));
+//			
+//			p.add(Bytes.toBytes("dropoff"),
+//					Bytes.toBytes("dropoffTime"),
+//					Bytes.toBytes(vals[2]));
+//			
+//			p.add(Bytes.toBytes("pickup"),
+//					Bytes.toBytes("dropoffLocationID"),
+//					Bytes.toBytes(vals[6]));
+//			table.put(p);
 			count++;
 		}
 	}
