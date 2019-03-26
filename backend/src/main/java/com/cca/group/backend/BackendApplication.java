@@ -3,6 +3,7 @@ package com.cca.group.backend;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HBaseConfiguration;
@@ -15,6 +16,7 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
+import org.assertj.core.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -72,37 +74,40 @@ public class BackendApplication {
 		
 		//For now, just getting one months data
 		BufferedReader br = new BufferedReader(new FileReader("/cca-group-project/data/green_tripdata_2018-01.csv"));
-		String input;
+		String str;
 		
 		br.readLine();
 		
 		int count = 0;
-		while ((input = br.readLine()) != null) {
-			String[] vals = input.split(",");
+		while ((str = br.readLine()) != null) {
+			String[] vals = str.split(",");
+			
 			for (int i = 0; i < vals.length; i++) {
 				System.out.print(i + ": " + vals[i].trim());
 				System.out.println("");
 			}
 			
-//			Put p = new Put(Bytes.toBytes("row" + count));
-//			
-//			p.add(Bytes.toBytes("pickup"),
-//					Bytes.toBytes("pickupTime"),
-//					Bytes.toBytes(vals[1]));
-//			
-//			p.add(Bytes.toBytes("pickup"),
-//					Bytes.toBytes("pickupLocationID"),
-//					Bytes.toBytes(vals[5]));
-//			
-//			p.add(Bytes.toBytes("dropoff"),
-//					Bytes.toBytes("dropoffTime"),
-//					Bytes.toBytes(vals[2]));
-//			
-//			p.add(Bytes.toBytes("pickup"),
-//					Bytes.toBytes("dropoffLocationID"),
-//					Bytes.toBytes(vals[6]));
-//			table.put(p);
-			count++;
+			if (vals.length > 0) {
+				Put p = new Put(Bytes.toBytes("row" + count));
+				
+				p.add(Bytes.toBytes("pickup"),
+						Bytes.toBytes("pickupTime"),
+						Bytes.toBytes(vals[1]));
+				
+				p.add(Bytes.toBytes("pickup"),
+						Bytes.toBytes("pickupLocationID"),
+						Bytes.toBytes(vals[5]));
+				
+				p.add(Bytes.toBytes("dropoff"),
+						Bytes.toBytes("dropoffTime"),
+						Bytes.toBytes(vals[2]));
+				
+				p.add(Bytes.toBytes("pickup"),
+						Bytes.toBytes("dropoffLocationID"),
+						Bytes.toBytes(vals[6]));
+				table.put(p);
+				count++;
+			}
 		}
 	}
 }
