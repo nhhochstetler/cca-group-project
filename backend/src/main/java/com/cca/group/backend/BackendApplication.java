@@ -66,7 +66,7 @@ public class BackendApplication {
 	
 	@SuppressWarnings("deprecation")
 	private void loadData(Configuration conf) throws IOException {
-		logger.debug("Populating the taxi tables with data");
+		logger.debug("Populating the taxi tables with data {}", System.getProperty("user.dir"));
 		
 		HTable table = new HTable(conf, "green_taxi");
 		
