@@ -11,5 +11,6 @@ This will run the container, forwarding port 8080 on the docker machine to port 
 ### To Run the Backend
 To test the backend, you can hit endpoints on localhost:8080
 
+    start-hbase.sh
     cd backend
     mvn spring-boot:run
