@@ -48,11 +48,10 @@ public class TaxiController {
 			String dateValue = Bytes.toString(result.getValue(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime")));
 			String totalValue = Bytes.toString(result.getValue(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount")));
 			
-			logger.debug("Time {}", LocalDate.parse(dateValue.split(" ")[0]));
-			doubleVal += Double.parseDouble(totalValue);
-			count++;
-			
-			logger.debug("Read {} {}", dateValue, totalValue);
+			if (dateValue.split(" ")[0].equals(date)) {
+				doubleVal += Double.parseDouble(totalValue);
+				count++;
+			}
 		}
 		
 		logger.debug("Final values {} {}", doubleVal, count);
