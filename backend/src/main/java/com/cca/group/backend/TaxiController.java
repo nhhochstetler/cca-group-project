@@ -30,7 +30,7 @@ public class TaxiController {
 	Logger logger = LoggerFactory.getLogger(UberController.class);
 
 	@RequestMapping("/averagePrice")
-	public String averagePrice(@RequestParam(value = "date", required = true) Date date,
+	public String averagePrice(@RequestParam(value = "date", required = true) String date,
 			@RequestParam(value = "distance", required = true) String startLong) throws IOException {
 		
 		HTable table = new HTable(conf, "green_taxi");
