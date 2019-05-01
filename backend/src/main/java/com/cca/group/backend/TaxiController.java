@@ -1,7 +1,7 @@
 package com.cca.group.backend;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.HTable;
@@ -29,6 +29,7 @@ public class TaxiController {
 
 	Logger logger = LoggerFactory.getLogger(UberController.class);
 
+	@SuppressWarnings("deprecation")
 	@RequestMapping("/averagePrice")
 	public String averagePrice(@RequestParam(value = "date", required = true) String date,
 			@RequestParam(value = "distance", required = true) String startLong) throws IOException {
@@ -39,7 +40,6 @@ public class TaxiController {
 		
 		scan.addColumn(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime"));
 		scan.addColumn(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount"));
-		scan.setTimeRange(1514764800L, 1514851199L);
 		
 		ResultScanner scanner = table.getScanner(scan);
 		double doubleVal = 0.00;
@@ -48,6 +48,7 @@ public class TaxiController {
 			String dateValue = Bytes.toString(result.getValue(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime")));
 			String totalValue = Bytes.toString(result.getValue(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount")));
 			
+			logger.debug("Time {}", LocalDate.parse(dateValue));
 			doubleVal += Double.parseDouble(totalValue);
 			count++;
 			
