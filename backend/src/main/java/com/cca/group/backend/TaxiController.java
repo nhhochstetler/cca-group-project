@@ -48,7 +48,7 @@ public class TaxiController {
 			String dateValue = Bytes.toString(result.getValue(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime")));
 			String totalValue = Bytes.toString(result.getValue(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount")));
 			
-			logger.debug("Time {}", LocalDate.parse(dateValue));
+			logger.debug("Time {}", LocalDate.parse(dateValue.split(" ")[0]));
 			doubleVal += Double.parseDouble(totalValue);
 			count++;
 			
