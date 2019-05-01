@@ -39,7 +39,7 @@ public class TaxiController {
 		
 		scan.addColumn(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime"));
 		scan.addColumn(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount"));
-//		scan.setTimeRange(1546300800L, 1546387199L);
+		scan.setTimeRange(1514764800L, 1514851199L);
 		
 		ResultScanner scanner = table.getScanner(scan);
 		double doubleVal = 0.00;
