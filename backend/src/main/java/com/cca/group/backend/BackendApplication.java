@@ -37,7 +37,7 @@ public class BackendApplication {
 	}
 	
 	@Bean
-	public HBaseAdmin hbaseConfig() throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
+	public Configuration hbaseConfig() throws MasterNotRunningException, ZooKeeperConnectionException, IOException {
 		logger.debug("Initializing HBase connection");
 		Configuration conf = HBaseConfiguration.create();
 		HBaseAdmin admin = new HBaseAdmin(conf);
@@ -49,7 +49,7 @@ public class BackendApplication {
 			logger.debug("Taxi table already exists. No need to create it");
 		}
 		
-		return admin;
+		return conf;
 	}
 	
 	private void createTable(HBaseAdmin admin) throws IOException {
@@ -97,9 +97,22 @@ public class BackendApplication {
 						Bytes.toBytes("dropoffTime"),
 						Bytes.toBytes(vals[2]));
 				
-				p.add(Bytes.toBytes("pickup"),
+				p.add(Bytes.toBytes("dropoff"),
 						Bytes.toBytes("dropoffLocationID"),
 						Bytes.toBytes(vals[6]));
+				
+				p.add(Bytes.toBytes("trip_data"),
+						Bytes.toBytes("tripDistance"),
+						Bytes.toBytes(vals[4]));
+				
+				p.add(Bytes.toBytes("trip_data"),
+						Bytes.toBytes("passengerCount"),
+						Bytes.toBytes(vals[3]));
+				
+				p.add(Bytes.toBytes("cost_fees"),
+						Bytes.toBytes("totalAmount"),
+						Bytes.toBytes(vals[16]));
+				
 				table.put(p);
 				count++;
 			}
