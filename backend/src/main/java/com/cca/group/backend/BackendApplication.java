@@ -79,6 +79,7 @@ public class BackendApplication {
 		
 		int count = 0;
 		while ((str = br.readLine()) != null) {
+			logger.debug("Reading line {}", str);
 			String[] vals = str.split(",");
 			
 			if (vals.length > 18) {
