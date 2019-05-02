@@ -2,6 +2,7 @@ package com.cca.group.backend;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.client.HTable;
@@ -48,7 +49,7 @@ public class TaxiController {
 			String dateValue = Bytes.toString(result.getValue(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime")));
 			String totalValue = Bytes.toString(result.getValue(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount")));
 			
-			LocalDate d = LocalDate.parse(dateValue.replace(" ", "T"));
+			LocalDate d = LocalDate.parse(dateValue, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
 			logger.debug("DATE {}", d.toString());
 			if (dateValue.split(" ")[0].equals(date)) {
