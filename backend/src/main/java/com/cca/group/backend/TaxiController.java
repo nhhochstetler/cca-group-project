@@ -48,7 +48,7 @@ public class TaxiController {
 			String dateValue = Bytes.toString(result.getValue(Bytes.toBytes("pickup"), Bytes.toBytes("pickupTime")));
 			String totalValue = Bytes.toString(result.getValue(Bytes.toBytes("cost_fees"), Bytes.toBytes("totalAmount")));
 			
-			LocalDate d = LocalDate.parse(date);
+			LocalDate d = LocalDate.parse(dateValue);
 			
 			logger.debug("DATE {}", d.toString());
 			if (dateValue.split(" ")[0].equals(date)) {
