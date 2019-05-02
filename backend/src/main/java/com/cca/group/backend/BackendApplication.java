@@ -83,7 +83,7 @@ public class BackendApplication {
 			String[] vals = str.split(",");
 			
 			if (vals.length > 18) {
-				Put p = new Put(Bytes.toBytes("row" + count));
+				Put p = new Put(Bytes.toBytes(vals[1].split(" ")[0]));
 				
 				p.add(Bytes.toBytes("pickup"),
 						Bytes.toBytes("pickupTime"),
