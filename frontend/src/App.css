@@ -1,0 +1,48 @@
+.location-field {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.location-label {
+  width: 150px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.go-btn {
+  background: #aef3ae;
+  padding: 32px 14px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  outline: #aef3ae;
+  margin-left: 30px;
+}
+
+.go-btn:active {
+  padding: 22px;
+}
+
+.App {
+  margin: 50px auto;
+  width: 50%;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 40px;
+}
+
+.flex-row {
+  display: flex;
+}
+
+.row {
+  display: flex;
+}
+
+.result-label {
+  width: 200px;
+  margin-bottom: 10px;
+}

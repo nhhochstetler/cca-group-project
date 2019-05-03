@@ -14,3 +14,11 @@ To test the backend, you can hit endpoints on localhost:8080
     start-hbase.sh
     cd backend
     mvn spring-boot:run
+
+### To Run the Frontend
+To test the frontend, you can hit endpoints on localhost:8080
+
+    cd frontend
+    npm install
+    PORT=8080 npm start
+
